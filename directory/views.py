@@ -1,6 +1,6 @@
 from django.shortcuts import render
-from .models import Doctor, Specialties
+from .models import Listings
 
 def index(request):
-	context = {Doctor:Doctor}
+	context = {Listings:Listings}
 	return render(request, 'directory/index.html', context)

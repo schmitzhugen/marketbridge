@@ -1,4 +1,4 @@
-"""psychiatry URL Configuration
+"""marketbridge URL Configuration
 
 The `urlpatterns` list routes URLs to views. For more information please see:
     https://docs.djangoproject.com/en/3.2/topics/http/urls/
@@ -16,13 +16,13 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path, include
 from iommi import Form, Table
-from directory.models import Doctor
+from directory.models import Listings
 
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('', include('directory.urls')),
-    path('iommi-form-test/', Form.create(auto__model=Doctor).as_view()),
-    path('iommi-table-test/', Table(auto__model=Doctor, columns__doc_surname__filter__include=True,).as_view()),
+    path('iommi-form-test/', Form.create(auto__model=Listings).as_view()),
+    path('iommi-table-test/', Table(auto__model=Listings, columns__event_name__filter__include=True,).as_view()),
 
 
 ]

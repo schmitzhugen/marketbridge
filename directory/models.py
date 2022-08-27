@@ -1,41 +1,34 @@
 from django.db import models
 
 # Create your models here.
-class Doctor(models.Model):
-	doc_forename = models.CharField(max_length=30)
-	doc_surname = models.CharField(max_length=30)
-	doc_info = models.TextField
+class Listings(models.Model):
+	crsid = models.CharField(max_length=8)
+	full_name = models.CharField(max_length=30)
+	event_name = models.CharField(max_length=50)
+	event_date = models.DateField()
+	price = models.DecimalField(max_digits = 10000, decimal_places=2)
 
-	INSURANCE_CHOICES = [
-	('Cigna', 'Cigna'),
-	('BUPA', 'BUPA'),
-	('Aviva', 'Aviva'),
-	('Cignet', 'Cignet'),
-	('Vitality', 'Vitality'),
-	('WPA', 'WPA'),
+	@property
+	def price_display(self):
+		return "£%s" % self._price_display
+	
+
+	date_added = models.DateTimeField(auto_now_add = True)
+	last_modified = models.DateTimeField(auto_now = True)
+	chat = models.TextField()
+
+	EVENT_CHOICES = [
+	('May Ball', 'May Ball'),
+	('Queer Get Down', 'Queer Get Down'),
+	('Wednesday Revs', 'Wednesday Revs'),
+	('Sunday Lolas', 'Sunday Lolas'),
+	("Captain's Cocktails", "Captain's Cocktails"),
+	("Friday Mash", "Friday Mash"),
+	("Saturday Mash", "Saturday Mash"),
+	("Other", "Other")
 	]
 
-	doc_insurance = models.CharField(choices=INSURANCE_CHOICES, max_length=100)
+	event_type = models.CharField(choices = EVENT_CHOICES, max_length=30)
 
 	def __str__(self):
-		return self.doc_surname
-
-class Specialties(models.Model):
-
-	CONDITION_CHOICES = [
-	('Depression', 'Depression'),
-	('OCD', 'OCD'),
-	('Anxiety', 'Anxiety'),
-	('PTSD', 'PTSD'),
-	('Schizophrenia', 'Schizophrenia'),
-	('Bulimia', 'Bulimia'),
-	('Bipolar_disorder', 'Bipolar disorder'),
-	('BPD', 'BPD'),
-	('Postpartum_depression', 'Postpartum depression'),
-	]
-
-	condition = models.CharField(choices=CONDITION_CHOICES, max_length=100)
-	doctors = models.ManyToManyField(Doctor)
-
-	def __str__(self):
-		return self.condition
+		return self.full_name
